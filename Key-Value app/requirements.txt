@@ -1,0 +1,4 @@
+flask==2.0.3
+requests==2.26.0
+flask-httpauth==4.5.0
+werkzeug==2.0.3

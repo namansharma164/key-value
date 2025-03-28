@@ -1,0 +1,28 @@
+
+services:
+  node1:
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      - kv-network
+
+  node2:
+    build: .
+    ports:
+      - "5001:5001"
+    command: ["python", "final_node.py", "5001"]
+    networks:
+      - kv-network
+
+  node3:
+    build: .
+    ports:
+      - "5002:5002"
+    command: ["python", "final_node.py", "5002"]
+    networks:
+      - kv-network
+
+networks:
+  kv-network:
+    driver: bridge
