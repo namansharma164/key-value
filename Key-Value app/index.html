@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Key-Value Store</title>
+    <script>
+        async function setKey() {
+            const key = document.getElementById('setKey').value;
+            const value = document.getElementById('setValue').value;
+            const response = await fetch(`/set/${key}/${value}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Basic ' + btoa('admin:secret')
+                }
+            });
+            const result = await response.json();
+            document.getElementById('setResult').innerText = JSON.stringify(result);
+        }
+
+        async function getKey() {
+            const key = document.getElementById('getKey').value;
+            const response = await fetch(`/get/${key}`);
+            const result = await response.json();
+            document.getElementById('getResult').innerText = JSON.stringify(result);
+        }
+
+        async function getPeers() {
+            const response = await fetch('/peers');
+            const result = await response.json();
+            document.getElementById('peersResult').innerText = JSON.stringify(result);
+        }
+    </script>
+</head>
+<body>
+    <h1>Distributed Key-Value Store</h1>
+
+    <h2>Set Key-Value Pair</h2>
+    <input type="text" id="setKey" placeholder="Key" />
+    <input type="text" id="setValue" placeholder="Value" />
+    <button onclick="setKey()">Set</button>
+    <p id="setResult"></p>
+
+    <h2>Get Value by Key</h2>
+    <input type="text" id="getKey" placeholder="Key" />
+    <button onclick="getKey()">Get</button>
+    <p id="getResult"></p>
+
+    <h2>Current Peers</h2>
+    <button onclick="getPeers()">Show Peers</button>
+    <p id="peersResult"></p>
+</body>
+</html>
